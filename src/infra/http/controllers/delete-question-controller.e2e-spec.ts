@@ -30,7 +30,7 @@ describe('Create question (E2E)', () => {
     await app.init();
   });
 
-  test('[PUT] /question/:id', async () => {
+  test('[DELETE] /question/:id', async () => {
     const user = await studentFactory.makePersistenceStudent();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
@@ -42,22 +42,18 @@ describe('Create question (E2E)', () => {
     const questionId = question.id.toString();
 
     const response = await request(app.getHttpServer())
-      .put(`/question/${questionId}`)
+      .delete(`/question/${questionId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        title: 'New title',
-        content: 'New question content',
-      });
+      .send();
 
     expect(response.statusCode).toBe(204);
 
-    const questionOnDatabase = await prisma.question.findFirst({
+    const questionOnDatabase = await prisma.question.findUnique({
       where: {
-        title: 'New title',
-        content: 'New question content',
+        id: questionId,
       },
     });
 
-    expect(questionOnDatabase).toBeTruthy();
+    expect(questionOnDatabase).toBeNull();
   });
 });
