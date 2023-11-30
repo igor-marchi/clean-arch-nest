@@ -8,7 +8,7 @@ import request from 'supertest';
 import { QuestionFactory } from 'test/factories/make-question';
 import { StudentFactory } from 'test/factories/make-student';
 
-describe('Create question (E2E)', () => {
+describe('Edit question (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let studentFactory: StudentFactory;
