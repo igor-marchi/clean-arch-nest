@@ -13,7 +13,7 @@ interface AuthenticateStudentUseCaseRequest {
 type AuthenticateStudentUseCaseResponse = Either<
   WrongCredentialError,
   {
-    accessToken: String;
+    accessToken: string;
   }
 >;
 
